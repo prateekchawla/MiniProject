@@ -1,17 +1,10 @@
 
 
-$azacct = "prateekchawla93@gmail.com"
-$azpassword = "galaxyyoung123"
 $RepoPath = "https://github.com/prateekchawla/SecondGit"
 
 $appID="717152e6-feef-4c22-904e-bad03901940d"
 $password="/DJv.^g!_#Q|)II_[};-1$W/#-$>?r$dI/*&}*6"
 $tenant="a26a5ff8-8542-4fff-b6de-bee30a6b56b7"
-$RESOURCE_NAME="PowerShellWebApp2"
-$PLAN_NAME="Plan2"
-$WEBAPP_NAME="PowerShellWebAppJi2"
-$username = "FirstAutomatedDeployment\$FirstAutomatedDeployment"
-$password = "mmPQX20aJa5LHTmDlLgpJ8NenH4zgkFpryfThookwhEM00ZBB6QgaqSrDN3D"
 
 az login --service-principal -u $appID --password $password --tenant $tenant
 az group create --location westeurope --name $RESOURCE_NAME
