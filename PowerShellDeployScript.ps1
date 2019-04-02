@@ -1,6 +1,4 @@
 
-$azacct = "prateekchawla93@gmail.com"
-$azpassword = "galaxyyoung123"
 $RepoPath = "https://github.com/prateekchawla/SecondGit"
 
 $appID="717152e6-feef-4c22-904e-bad03901940d"
