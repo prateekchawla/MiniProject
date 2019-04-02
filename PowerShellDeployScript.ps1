@@ -6,7 +6,7 @@ $password="/DJv.^g!_#Q|)II_[};-1$W/#-$>?r$dI/*&}*6"
 $tenant="a26a5ff8-8542-4fff-b6de-bee30a6b56b7"
 $RESOURCE_NAME="AzureResourceGroup"
 $PLAN_NAME="AzurePlan"
-$WEBAPP_NAME="MyFirstAzureWebsite"
+$WEBAPP_NAME="MyFirstAzureWebsiteAdmiral"
 
 az login --service-principal -u $appID --password $password --tenant $tenant
 az group create --location westeurope --name $RESOURCE_NAME
