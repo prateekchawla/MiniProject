@@ -29,10 +29,10 @@ az webapp deployment source config --name $WEBAPP_NAME --resource-group $RESOURC
 	       $Content = $Response.Content
 	
 	       while(!($Content -match $Content_Test)){
-	              if($i -eq 2){
-	                     #it has been more than 2 minutes and the page never returned good content
+	              if($i -eq 1){
+	                     #it has been more than 1 minutes and the page never returned good content
 	                     #send out an alert email
-	                     echo "It has been 2 minutes without a good response..."
+	                     echo "It has been 1 minutes without a good response..."
 	                     echo "Aborting the job and sending an alert email"
 	                     send-mailmessage -from "AutomationReportAgent@inspopindia.com" -to "prateek.chawla@elephant.com" -BodyAsHtml -subject "UnSuccessful Deployment of $WEBAPP_NAME " -body "<This is an automated message sent from Jenkins.</font></font>" -smtpServer EXCHANGE.InspopCorp.com
 	                     exit 1
