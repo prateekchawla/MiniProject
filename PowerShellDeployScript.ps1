@@ -62,20 +62,21 @@ az webapp deployment source config --name $WEBAPP_NAME --resource-group $RESOURC
 	              $Content = $Response.Content
 	              $i++
 	       }
+	       
 	#page has returned the correct content
 	echo "Good HTTP Content"
         Send-ToEmail  -email $ToEmail -Subject "Successful Deployment of $WEBAPP_NAME" -Body "This is an Automated mail by Jenkins"
   
   
 #Check Http status code of website  
-$HTTP_Status = curl.exe -sL -w "%{http_code}" -I $url -o /dev/null
-If ($HTTP_Status -eq 200) {
-    echo "Site is OK with status code" $HTTP_Status
-}
-Else {
-   echo "The Site may be down, please check!"
-}
+#$HTTP_Status = curl.exe -sL -w "%{http_code}" -I $url -o /dev/null
+#If ($HTTP_Status -eq 200) {
+ #   echo "Site is OK with status code" $HTTP_Status
+#}
+#Else {
+ #  echo "The Site may be down, please check!"
+#}
 
-echo "Your website is:"
-echo $url
+#echo "Your website is:"
+#echo $url
 
