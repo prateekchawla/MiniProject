@@ -27,15 +27,15 @@ function Send-ToEmail([string]$email , [string]$Subject , [string]$Body){
     $smtp.send($message);
  }
  
- curlwithcode() 
+ curlwithcode([string]$url) 
  {
     code=0
     # Run curl in a separate command, capturing output of -w "%{http_code}" into statuscode
     # and sending the content to a file with -o >(cat >/tmp/curl_body)
     statuscode=$(curl -w "%{http_code}" \
         -o >(cat >/tmp/curl_body) \
-        "$@"
-    ) || code="$?"
+        "$url"
+    ) || code="$url"
 
     body="$(cat /tmp/curl_body)"
     echo "statuscode : $statuscode"
