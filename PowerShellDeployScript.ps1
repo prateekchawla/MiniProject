@@ -15,11 +15,12 @@ az webapp create --name $WEBAPP_NAME --resource-group $RESOURCE_NAME --plan $PLA
 
 
 az webapp deployment source config --name $WEBAPP_NAME --resource-group $RESOURCE_NAME --repo-url $RepoPath --branch master --manual-integration
+Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 
     #Build url to test
 	       $port = "8080"
 	       $url = ""
-	       $recipients = "prateek.chawla@elephant.com"
+	       $recipients = "prateek.chawla@elephant.com,prateek.chawla@inspopindia.com"
 	       echo "URL to test : http://myfirstazurewebsiteadmiral.azurewebsites.net" 
 	
 	       $i = 0
@@ -48,7 +49,6 @@ az webapp deployment source config --name $WEBAPP_NAME --resource-group $RESOURC
 	
 	       #page has returned the correct content
 	       echo "Good HTTP Content"
-         
-send-mailmessage -from "AutomationReportAgent@inspopindia.com" -to "prateek.chawla@elephant.com" -BodyAsHtml -subject "Successful Deployment of $WEBAPP_NAME " -body "<This is an automated message sent from Jenkins.</font></font>" -smtpServer EXCHANGE.InspopCorp.com
+               send-mailmessage -from "AutomationReportAgent@inspopindia.com" -to "prateek.chawla@elephant.com" -BodyAsHtml -subject "Successful Deployment of $WEBAPP_NAME " -body "<This is an automated message sent from Jenkins.</font></font>" -smtpServer EXCHANGE.InspopCorp.com
  
 echo http://$WEBAPP_NAME.azurewebsites.net
