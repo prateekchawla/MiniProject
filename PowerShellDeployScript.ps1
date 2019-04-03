@@ -20,19 +20,19 @@ az webapp deployment source config --name $WEBAPP_NAME --resource-group $RESOURC
 	       $port = "8080"
 	       $url = ""
 	       $recipients = "prateek.chawla@elephant.com"
-	       echo "URL to test : $url" 
+	       echo "URL to test : http://myfirstazurewebsiteadmiral.azurewebsites.net" 
 	
 	       $i = 0
 	       $Content_Test = "Automation"
 	       
-	       $Response = Invoke-WebRequest http://$WEBAPP_NAME.azurewebsites.net
+	       $Response = Invoke-WebRequest http://myfirstazurewebsiteadmiral.azurewebsites.net/
 	       $Content = $Response.Content
 	
 	       while(!($Content -match $Content_Test)){
 	              if($i -eq 2){
 	                     #it has been more than 2 minutes and the page never returned good content
 	                     #send out an alert email
-	                     echo "It has been 15 minutes without a good response..."
+	                     echo "It has been 2 minutes without a good response..."
 	                     echo "Aborting the job and sending an alert email"
 	                     send-mailmessage -from "AutomationReportAgent@inspopindia.com" -to "prateek.chawla@elephant.com" -BodyAsHtml -subject "UnSuccessful Deployment of $WEBAPP_NAME " -body "<This is an automated message sent from Jenkins.</font></font>" -smtpServer EXCHANGE.InspopCorp.com
 	                     exit 1
@@ -41,7 +41,7 @@ az webapp deployment source config --name $WEBAPP_NAME --resource-group $RESOURC
 	              echo "Bad HTTP Content Response"
 	              echo "Sleeping 1 minute..."
 	              Start-Sleep -s 60
-	              $Response = Invoke-WebRequest http://$WEBAPP_NAME.azurewebsites.net
+	              $Response = Invoke-WebRequest http://myfirstazurewebsiteadmiral.azurewebsites.net/
 	              $Content = $Response.Content
 	              $i++
 	       }
