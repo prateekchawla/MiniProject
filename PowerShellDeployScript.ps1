@@ -73,7 +73,5 @@ echo $url
 
 #choco install curl -yes 
 $response = curl -v $url -UseBasicParsing
-$status = false;
 
-echo $status
 echo $response
