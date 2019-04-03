@@ -81,5 +81,7 @@ $lastBuildRunning = (curl.exe --insecure -uDevopsUser:$rtttt GET -s "https://jen
 #STATUS=$(curl -s -o /dev/null -w '%{http_code}' $url)
 #$curl -LIs $url -UseBasicParsing
 
-echo $responseNew
+curl -I -X POST http://http://localjenkins:8080/job/Ping/build?token=156 -H "Jenkins-Crumb:-H "Jenkins-Crumb:7770174f089684bc3e8febb02daf1716"
+
+#echo $responseNew
 #echo $response
