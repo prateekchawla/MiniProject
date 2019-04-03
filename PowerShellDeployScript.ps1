@@ -76,10 +76,12 @@ choco install curl -yes
 
 $responseNew = curl -I $url/dev/null | head -n 1 | cut -d$' ' -f2 -UseBasicParsing
 
-STATUS=$(curl -s -o /dev/null -w '%{http_code}' $url)
+$STATUS=$(curl -s -o /dev/null -w '%{http_code}' $url) -UseBasicParsing
 
 #$curl -LIs $url -UseBasicParsing
 
 
 echo $responseNew
+echo $STATUS
+
 #echo $response
