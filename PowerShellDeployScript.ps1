@@ -14,8 +14,8 @@ function Send-ToEmail([string]$email , [string]$Subject , [string]$Body){
     $message = new-object Net.Mail.MailMessage;
     $message.From = "AutomationReportAgent@inspopindia.com";
     $message.To.Add($email);
-    $message.Subject = "Jenkinsssssssssssssss...";
-    $message.Body = "mail by jenkins...";
+    $message.Subject = $Subject;
+    $message.Body = $Body;
     
 
     $smtp = new-object Net.Mail.SmtpClient("EXCHANGE.InspopCorp.com");
