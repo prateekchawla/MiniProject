@@ -71,19 +71,24 @@ az webapp deployment source config --name $WEBAPP_NAME --resource-group $RESOURC
  
 echo $url
 
-choco install curl -yes 
-#$response = curl -v $url -UseBasicParsing
+#choco install curl -yes 
 
-curl www.$url -s -f -o /dev/null || echo "Website down." | echo "Website is down" 
+$response = curl -v $url -UseBasicParsing
 
+echo $response
+
+If ($response -eq 200) {
+    Write-Host "Site is OK!"
+}
+Else {
+    Write-Host "The Site may be down, please check!"
+}
+
+#--------------------------Commented Code-----------------------------------------
+#curl www.$url -s -f -o /dev/null || echo "Website down." | echo "Website is down" 
 #$responseNew = curl -I $url/dev/null | head -n 1 | cut -d$' ' -f2 
-
 #$STATUS=$(curl -s -o /dev/null -w '%{http_code}' $url) 
-
 #$curl -LIs $url -UseBasicParsing
-
-
 #echo $responseNew
 #echo $STATUS
-
 #echo $response
