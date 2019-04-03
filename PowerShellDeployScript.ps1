@@ -75,4 +75,4 @@ echo $url
 #$response = curl -v $url -UseBasicParsing
 $curl -LIs $url -UseBasicParsing
 
-echo $response
+#echo $response
