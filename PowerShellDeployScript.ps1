@@ -1,5 +1,4 @@
 $RepoPath = "https://github.com/prateekchawla/SecondGit"
-
 $appID="717152e6-feef-4c22-904e-bad03901940d"
 $password="/DJv.^g!_#Q|)II_[};-1$W/#-$>?r$dI/*&}*6"
 $tenant="a26a5ff8-8542-4fff-b6de-bee30a6b56b7"
@@ -10,92 +9,73 @@ $EmailUsername = "prateek.chawla";
 $EmailPassword = "Galaxyyoung123";
 $FromEmail = "AutomationReportAgent@inspopindia.com";
 $SMPTP_Server = "EXCHANGE.InspopCorp.com";
+$ToEmail = "prateek.chawla@inspopindia.com";
 
-
-function Send-ToEmail([string]$email , [string]$Subject , [string]$Body){
-
+	#Function to send Email using smtp 
+function Send-ToEmail([string]$email , [string]$Subject , [string]$Body)
+{
     $message = new-object Net.Mail.MailMessage;
     $message.From = $FromEmail;
     $message.To.Add($email);
     $message.Subject = $Subject;
     $message.Body = $Body;
-    
-
     $smtp = new-object Net.Mail.SmtpClient($SMPTP_Server);
     $smtp.EnableSSL = $true;
     $smtp.Credentials = New-Object System.Net.NetworkCredential($EmailUsername, $EmailPassword);
     $smtp.send($message);
  }
 
- 
+    #Create Azure resources
 az login --service-principal -u $appID --password $password --tenant $tenant
 az group create --location westeurope --name $RESOURCE_NAME
 az appservice plan create --name $PLAN_NAME --resource-group $RESOURCE_NAME --sku FREE
 az webapp create --name $WEBAPP_NAME --resource-group $RESOURCE_NAME --plan $PLAN_NAME
 
-
+   #Deploy to Azure resource
 az webapp deployment source config --name $WEBAPP_NAME --resource-group $RESOURCE_NAME --repo-url $RepoPath --branch master --manual-integration
 
-    #Build url to test
-	       $port = "8080"
-	       $url = "http://$WEBAPP_NAME.azurewebsites.net"
-	       $recipients = "prateek.chawla@elephant.com"
-	       echo "URL to test : $url" 
+   #Test content on website
+	$url = "http://$WEBAPP_NAME.azurewebsites.net"
+	$recipients = "prateek.chawla@elephant.com"
+	echo "URL to test : $url" 
+	$i = 0
+	$Content_Test = "Automation"
+	$Response = Invoke-WebRequest $url -UseBasicParsing
+	$Content = $Response.Content
 	
-	       $i = 0
-	       $Content_Test = "Automation"
-	       
-	       $Response = Invoke-WebRequest $url -UseBasicParsing
-	       $Content = $Response.Content
-	
-	       while(!($Content -match $Content_Test))
-	       {
-	              if($i -eq 2){
-	                     #it has been more than 2 minutes and the page never returned good content
+	  while(!($Content -match $Content_Test))
+	    {
+	           if($i -eq 2)
+		   {
+	               	     #it has been more than 1 minute and the page never returned good content
 	                     #send out an alert email
-	                     echo "It has been 2 minutes without a good response..."
+	                     echo "It has been 1 minute without a good response..."
 	                     echo "Aborting the job and sending an alert email"
-	                     Send-ToEmail  -email "prateek.chawla@inspopindia.com" -Subject "UnSuccessful Deployment of $WEBAPP_NAME" -Body "This is an Automated mail by Jenkins"
+	                     Send-ToEmail  -email $ToEmail -Subject "UnSuccessful Deployment of $WEBAPP_NAME" -Body "This is an Automated mail by Jenkins"
 	                     exit 1
 	              }
 	              #page is still not returning the correct content
 	              echo "Bad HTTP Content Response"
-	              echo "Sleeping 1 minute..."
-	              Start-Sleep -s 60
+	              echo "Sleeping 30 SECONDS..."
+	              Start-Sleep -s 30
 	              $Response = Invoke-WebRequest $url -UseBasicParsing
 	              $Content = $Response.Content
 	              $i++
 	       }
 	#page has returned the correct content
 	echo "Good HTTP Content"
-        Send-ToEmail  -email "prateek.chawla@inspopindia.com" -Subject "Successful Deployment of $WEBAPP_NAME" -Body "This is an Automated mail by Jenkins"
- 
+        Send-ToEmail  -email $ToEmail -Subject "Successful Deployment of $WEBAPP_NAME" -Body "This is an Automated mail by Jenkins"
+  
+  
+#Check Http status code of website  
+$HTTP_Status = curl.exe -sL -w "%{http_code}" -I $url -o /dev/null
+If ($HTTP_Status -eq 200) {
+    echo "Site is OK!"
+}
+Else {
+   echo "The Site may be down, please check!"
+}
+
+echo "Your website is:"
 echo $url
 
-$variable = curl.exe -sL -w "%{http_code}" -I "www.google.com" -o /dev/null
-echo $variable
-
-#choco install curl -yes 
-#curlwithcode $url
-
-#$response = curl $url -w ", %{http_code}"
-
-#$response = curl -v $url -UseBasicParsing
-
-#echo $response
-
-#If ($response -eq 200) {
-#    Write-Host "Site is OK!"
-#}
-#Else {
-#    Write-Host "The Site may be down, please check!"
-#}
-
-#--------------------------Commented Code-----------------------------------------
-#curl www.$url -s -f -o /dev/null || echo "Website down." | echo "Website is down" 
-#$responseNew = curl -I $url/dev/null | head -n 1 | cut -d$' ' -f2 
-#$STATUS=$(curl -s -o /dev/null -w '%{http_code}' $url) 
-#$curl -LIs $url -UseBasicParsing
-#echo $responseNew
-#echo $STATUS
-#echo $response
