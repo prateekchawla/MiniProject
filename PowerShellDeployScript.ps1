@@ -72,6 +72,10 @@ az webapp deployment source config --name $WEBAPP_NAME --resource-group $RESOURC
 echo $url
 
 choco install curl -yes 
-curl -v http://myfirstazurewebsiteadmiral.azurewebsites.net -UseBasicParsing
-$status = curl -Is "http://myfirstazurewebsiteadmiral.azurewebsites.net" | head -n 1
+$response = curl -v $url -UseBasicParsing
+$status = false;
+
+case "$response" in
+        200) $status = true;;
+
 echo $status
