@@ -74,7 +74,9 @@ echo $url
 choco install curl -yes 
 #$response = curl -v $url -UseBasicParsing
 
-$responseNew = curl -I http://example.org 2>/dev/null | head -n 1 | cut -d$' ' -f2
+$lastBuildRunning = (curl.exe --insecure -uDevopsUser:$rtttt GET -s "https://jenkqaw1200.admiral.local/job/CORE_DEV_Branch/job/BillingCenter/job/BC_Build_Dev/lastBuild/api/xml?xpath=/*/building")
+
+#$responseNew = curl -I http://example.org 2>/dev/null | head -n 1 | cut -d$' ' -f2
 
 #STATUS=$(curl -s -o /dev/null -w '%{http_code}' $url)
 #$curl -LIs $url -UseBasicParsing
