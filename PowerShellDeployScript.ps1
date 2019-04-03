@@ -7,8 +7,8 @@
 	       $i = 0
 	       $Content_Test = "g"
 	       
-	       $Response = Invoke-WebRequest http://google.com
-	       $Content = $Response.Content
+	       $Response = Invoke-WebRequest http://google.com -UseBasicParsing
+	       $Content = $Response.Content 
 	
 	       while(!($Content -match $Content_Test)){
 	              if($i -eq 1){
@@ -23,7 +23,7 @@
 	              echo "Bad HTTP Content Response"
 	              echo "Sleeping 1 minute..."
 	              Start-Sleep -s 2
-	              $Response = Invoke-WebRequest http://google.com
+	              $Response = Invoke-WebRequest http://google.com -UseBasicParsing
 	              $Content = $Response.Content
 	              $i++
 	       }
