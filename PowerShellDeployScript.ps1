@@ -77,5 +77,5 @@ $response = curl -v $url -UseBasicParsing
 #STATUS=$(curl -s -o /dev/null -w '%{http_code}' $url)
 #$curl -LIs $url -UseBasicParsing
 
-echo response
+echo $response
 #echo $response
