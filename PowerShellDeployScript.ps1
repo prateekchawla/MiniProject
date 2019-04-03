@@ -8,21 +8,23 @@ $PLAN_NAME="AzurePlan"
 $WEBAPP_NAME="MyFirstAzureWebsiteAdmiral"
 $EmailUsername = "prateek.chawla";
 $EmailPassword = "Galaxyyoung123";
+$FromEmail = "AutomationReportAgent@inspopindia.com";
+$SMPTP_Server = "EXCHANGE.InspopCorp.com";
+
 
 function Send-ToEmail([string]$email , [string]$Subject , [string]$Body){
 
     $message = new-object Net.Mail.MailMessage;
-    $message.From = "AutomationReportAgent@inspopindia.com";
+    $message.From = $FromEmail;
     $message.To.Add($email);
     $message.Subject = $Subject;
     $message.Body = $Body;
     
 
-    $smtp = new-object Net.Mail.SmtpClient("EXCHANGE.InspopCorp.com");
+    $smtp = new-object Net.Mail.SmtpClient($SMPTP_Server);
     $smtp.EnableSSL = $true;
     $smtp.Credentials = New-Object System.Net.NetworkCredential($EmailUsername, $EmailPassword);
     $smtp.send($message);
-    write-host "Mail Sent" ; 
  }
  
 az login --service-principal -u $appID --password $password --tenant $tenant
@@ -45,7 +47,8 @@ az webapp deployment source config --name $WEBAPP_NAME --resource-group $RESOURC
 	       $Response = Invoke-WebRequest $url -UseBasicParsing
 	       $Content = $Response.Content
 	
-	       while(!($Content -match $Content_Test)){
+	       while(!($Content -match $Content_Test))
+	       {
 	              if($i -eq 2){
 	                     #it has been more than 2 minutes and the page never returned good content
 	                     #send out an alert email
@@ -62,13 +65,11 @@ az webapp deployment source config --name $WEBAPP_NAME --resource-group $RESOURC
 	              $Content = $Response.Content
 	              $i++
 	       }
-	
-	       #page has returned the correct content
-	       echo "Good HTTP Content"
-         
-Send-ToEmail  -email "prateek.chawla@inspopindia.com" -Subject "Successful Deployment of $WEBAPP_NAME" -Body "This is an Automated mail by Jenkins"
+	#page has returned the correct content
+	echo "Good HTTP Content"
+        Send-ToEmail  -email "prateek.chawla@inspopindia.com" -Subject "Successful Deployment of $WEBAPP_NAME" -Body "This is an Automated mail by Jenkins"
  
-echo http://$WEBAPP_NAME.azurewebsites.net
+echo $url
 
-
-Send-ToEmail  -email "prateek.chawla@inspopindia.com" -Subject "Successful Deployment of $WEBAPP_NAME" -Body "This is an Automated mail by Jenkins"
+$status = curl -Is $url | head -n 1
+echo $status
