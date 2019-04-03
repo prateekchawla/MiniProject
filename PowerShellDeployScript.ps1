@@ -72,7 +72,7 @@ az webapp deployment source config --name $WEBAPP_NAME --resource-group $RESOURC
  
 echo $url
 
-$variable = curl -sL -w "%{http_code}" -I "www.google.com" -o /dev/null
+$variable = curl.exe -sL -w "%{http_code}" -I "www.google.com" -o /dev/null
 echo $variable
 
 #choco install curl -yes 
