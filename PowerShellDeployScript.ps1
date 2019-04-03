@@ -73,7 +73,9 @@ echo $url
 
 #choco install curl -yes 
 
-$response = curl -v $url -UseBasicParsing
+$response = curl $url -w ", %{http_code}"
+
+#$response = curl -v $url -UseBasicParsing
 
 echo $response
 
