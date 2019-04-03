@@ -76,6 +76,6 @@ $response = curl -v $url -UseBasicParsing
 $status = false;
 
 case "$response" in
-        200) $status = true;;
+        200) $status = true;
 
 echo $status
