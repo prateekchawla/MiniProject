@@ -72,6 +72,6 @@ az webapp deployment source config --name $WEBAPP_NAME --resource-group $RESOURC
 echo $url
 
 #choco install curl -yes 
-$response = curl -v $url -UseBasicParsing
+$response = curl.exe -v $url -UseBasicParsing
 
 echo $response
