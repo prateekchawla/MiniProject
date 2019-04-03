@@ -35,14 +35,14 @@ az webapp deployment source config --name $WEBAPP_NAME --resource-group $RESOURC
 
     #Build url to test
 	       $port = "8080"
-	       $url = ""
+	       $url = "http://$WEBAPP_NAME.azurewebsites.net"
 	       $recipients = "prateek.chawla@elephant.com"
-	       echo "URL to test : http://$WEBAPP_NAME.azurewebsites.net" 
+	       echo "URL to test : $url" 
 	
 	       $i = 0
 	       $Content_Test = "Automation"
 	       
-	       $Response = Invoke-WebRequest http://$WEBAPP_NAME.azurewebsites.net
+	       $Response = Invoke-WebRequest $url -UseBasicParsing
 	       $Content = $Response.Content
 	
 	       while(!($Content -match $Content_Test)){
@@ -58,7 +58,7 @@ az webapp deployment source config --name $WEBAPP_NAME --resource-group $RESOURC
 	              echo "Bad HTTP Content Response"
 	              echo "Sleeping 1 minute..."
 	              Start-Sleep -s 60
-	              $Response = Invoke-WebRequest http://$WEBAPP_NAME.azurewebsites.net
+	              $Response = Invoke-WebRequest $url -UseBasicParsing
 	              $Content = $Response.Content
 	              $i++
 	       }
