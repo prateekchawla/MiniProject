@@ -71,5 +71,6 @@ az webapp deployment source config --name $WEBAPP_NAME --resource-group $RESOURC
  
 echo $url
 
+choco install curl
 $status = curl -Is $url | head -n 1
 echo $status
