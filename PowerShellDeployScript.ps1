@@ -74,7 +74,7 @@ echo $url
 #choco install curl -yes 
 #$response = curl -v $url -UseBasicParsing
 
-$response = curl -LI $url -o /dev/null -w '%{http_code}\n' -s
+$response = curl -I http://example.org 2>/dev/null | head -n 1 | cut -d$' ' -f2
 
 #STATUS=$(curl -s -o /dev/null -w '%{http_code}' $url)
 #$curl -LIs $url -UseBasicParsing
