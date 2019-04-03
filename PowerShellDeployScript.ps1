@@ -27,6 +27,25 @@ function Send-ToEmail([string]$email , [string]$Subject , [string]$Body){
     $smtp.send($message);
  }
  
+ curlwithcode() 
+ {
+    code=0
+    # Run curl in a separate command, capturing output of -w "%{http_code}" into statuscode
+    # and sending the content to a file with -o >(cat >/tmp/curl_body)
+    statuscode=$(curl -w "%{http_code}" \
+        -o >(cat >/tmp/curl_body) \
+        "$@"
+    ) || code="$?"
+
+    body="$(cat /tmp/curl_body)"
+    echo "statuscode : $statuscode"
+    echo "exitcode : $code"
+    echo "body : $body"
+}
+
+
+
+ 
 az login --service-principal -u $appID --password $password --tenant $tenant
 az group create --location westeurope --name $RESOURCE_NAME
 az appservice plan create --name $PLAN_NAME --resource-group $RESOURCE_NAME --sku FREE
@@ -72,19 +91,20 @@ az webapp deployment source config --name $WEBAPP_NAME --resource-group $RESOURC
 echo $url
 
 #choco install curl -yes 
+curlwithcode $url
 
-$response = curl $url -w ", %{http_code}"
+#$response = curl $url -w ", %{http_code}"
 
 #$response = curl -v $url -UseBasicParsing
 
-echo $response
+#echo $response
 
-If ($response -eq 200) {
-    Write-Host "Site is OK!"
-}
-Else {
-    Write-Host "The Site may be down, please check!"
-}
+#If ($response -eq 200) {
+#    Write-Host "Site is OK!"
+#}
+#Else {
+#    Write-Host "The Site may be down, please check!"
+#}
 
 #--------------------------Commented Code-----------------------------------------
 #curl www.$url -s -f -o /dev/null || echo "Website down." | echo "Website is down" 
