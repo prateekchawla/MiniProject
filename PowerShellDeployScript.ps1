@@ -74,14 +74,16 @@ echo $url
 choco install curl -yes 
 #$response = curl -v $url -UseBasicParsing
 
-$responseNew = curl -I $url/dev/null | head -n 1 | cut -d$' ' -f2 
+curl www.$url -s -f -o /dev/null || echo "Website down." | echo "Website is down" 
 
-$STATUS=$(curl -s -o /dev/null -w '%{http_code}' $url) 
+#$responseNew = curl -I $url/dev/null | head -n 1 | cut -d$' ' -f2 
+
+#$STATUS=$(curl -s -o /dev/null -w '%{http_code}' $url) 
 
 #$curl -LIs $url -UseBasicParsing
 
 
-echo $responseNew
-echo $STATUS
+#echo $responseNew
+#echo $STATUS
 
 #echo $response
