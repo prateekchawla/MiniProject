@@ -73,7 +73,10 @@ echo $url
 
 #choco install curl -yes 
 #$response = curl -v $url -UseBasicParsing
-STATUS=$(curl -s -o /dev/null -w '%{http_code}' $url)
+#STATUS=$(curl -s -o /dev/null -w '%{http_code}' $url)
 #$curl -LIs $url -UseBasicParsing
-echo STATUS
+
+$ response=$(curl -X POST $url);
+
+echo response
 #echo $response
