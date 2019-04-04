@@ -1,54 +1,88 @@
-Project title
-A little info about your project and/ or overview that explains what the project is about.
+# Project Title
 
-Motivation
-A short description of the motivation behind the creation and maintenance of the project. This should explain why the project exists.
+One Paragraph of project description goes here
 
-Build status
-Build status of continus integration i.e. travis, appveyor etc. Ex. -
+## Getting Started
 
-Build Status Windows Build Status
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
-Code style
-If you're using any code style like xo, standard etc. That will help others while contributing to your project. Ex. -
+### Prerequisites
 
-js-standard-style
+What things you need to install the software and how to install them
 
-Screenshots
-Include logo/demo screenshot etc.
+```
+Give examples
+```
 
-Tech/framework used
-Ex. -
+### Installing
 
-Built with
+A step by step series of examples that tell you how to get a development env running
 
-Electron
-Features
-What makes your project stand out?
+Say what the step will be
 
-Code Example
-Show what the library does as concisely as possible, developers should be able to figure out how your project solves their problem by looking at the code example. Make sure the API you are showing off is obvious, and that your code is short and concise.
+```
+Give the example
+```
 
-Installation
-Provide step by step series of examples and explanations about how to get a development env running.
+And repeat
 
-API Reference
-Depending on the size of the project, if it is small and simple enough the reference docs can be added to the README. For medium size to larger projects it is important to at least provide a link to where the API reference docs live.
+```
+until finished
+```
 
-Tests
-Describe and show how to run the tests with code examples.
+End with an example of getting some data out of the system or using it for a little demo
 
-How to use?
-If people like your project they’ll want to learn how they can use it. To do so include step by step guide to use your project.
+## Running the tests
 
-Contribute
-Let people know how they can contribute into your project. A contributing guideline will be a big plus.
+Explain how to run the automated tests for this system
 
-Credits
-Give proper credits. This could be a link to any repo which inspired you to build this project, any blogposts or links to people who contrbuted in this project.
+### Break down into end to end tests
 
-Anything else that seems useful
-License
-A short snippet describing the license (MIT, Apache etc)
+Explain what these tests test and why
 
-MIT © Yourname
+```
+Give an example
+```
+
+### And coding style tests
+
+Explain what these tests test and why
+
+```
+Give an example
+```
+
+## Deployment
+
+Add additional notes about how to deploy this on a live system
+
+## Built With
+
+* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
+* [Maven](https://maven.apache.org/) - Dependency Management
+* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
+
+## Contributing
+
+Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
+
+## Versioning
+
+We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
+
+## Authors
+
+* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
+
+See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+
+## Acknowledgments
+
+* Hat tip to anyone whose code was used
+* Inspiration
+* etc
+
