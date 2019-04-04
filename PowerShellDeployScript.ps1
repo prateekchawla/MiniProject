@@ -77,7 +77,6 @@ Else {
   echo "The Site may be down, please check!"
 }
 
-echo $HTTP_Status
 echo "Your website is:"
 echo $url
 
