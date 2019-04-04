@@ -69,7 +69,7 @@ az webapp deployment source config --name $WEBAPP_NAME --resource-group $RESOURC
   
   
 #Check Http status code of website  
-$HTTP_Status = curl.exe -sL -w "%{http_code}" -I $url -o /dev/null
+#$HTTP_Status = curl.exe -sL -w "%{http_code}" -I $url -o /dev/null
 #If ($HTTP_Status -eq 200) {
 #    echo "Site is OK with status code" $HTTP_Status
 #}
