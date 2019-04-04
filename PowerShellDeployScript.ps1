@@ -80,4 +80,4 @@ Else {
 echo $HTTP_Status
 echo "Your website is:"
 echo $url
-exit -1
+exit 0
