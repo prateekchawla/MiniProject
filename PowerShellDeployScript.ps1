@@ -1,6 +1,6 @@
 $RepoPath = "https://github.com/prateekchawla/SecondGit"
 $appID="cf1e7bb5-d72e-40e0-a9f1-376ff80fc836"
-$password="X5F58+lprgMQ8KCeWBX/JpFvEnKSzoP/x6NztTuRKAc="
+$password="lNjuMvj7evFl8Mp/jJ1dXMkzpevmz4Od1vwIT6uUIDQ="
 $tenant="db0c5f88-2012-4148-8aed-ff42f535b57b"
 $RESOURCE_NAME="AzureResourceGroup"
 $PLAN_NAME="AzurePlan"
