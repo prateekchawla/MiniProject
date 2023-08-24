@@ -1,1 +1,18 @@
-
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "workflows_EmailToTMRs_name": {
+            "value": "EmailToTMRs"
+        },
+        "connections_office365_4_externalid": {
+            "value": "/subscriptions/855cfd52-abcd-efgh-b698-8d8a995bd70f/resourceGroups/CC-DEV-RG/providers/Microsoft.Web/connections/office365-4"
+        },
+        "connections_sql_externalid": {
+            "value": "/subscriptions/855cfd52-abcd-efgh-b698-8d8a995bd70f/resourceGroups/CC-DEV-RG/providers/Microsoft.Web/connections/sql"
+        },
+       "Environment": {
+            "value": "DEV"
+        },
+    }
+}
