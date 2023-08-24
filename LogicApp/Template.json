@@ -1,0 +1,164 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "workflows_EmailToTMRs_name": {
+            "defaultValue": "EmailToTMRs",
+            "type": "String"
+        },
+        "connections_office365_4_externalid": {
+            "defaultValue": "/subscriptions/855cfd52-abcd-efgh-b698-8d8a995bd70f/resourceGroups/CC-DEV-RG/providers/Microsoft.Web/connections/office365-4",
+            "type": "String"
+        },
+        "connections_sql_externalid": {
+            "defaultValue": "/subscriptions/855cfd52-abcd-efgh-b698-8d8a995bd70f/resourceGroups/CC-DEV-RG/providers/Microsoft.Web/connections/sql",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Logic/workflows",
+            "apiVersion": "2017-07-01",
+            "name": "[parameters('workflows_EmailToTMRs_name')]",
+            "location": "westus2",
+            "properties": {
+                "state": "Disabled",
+                "definition": {
+                    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {
+                        "$connections": {
+                            "defaultValue": {},
+                            "type": "Object"
+                        }
+                    },
+                    "triggers": {
+                        "Recurrence": {
+                            "recurrence": {
+                                "frequency": "Minute",
+                                "interval": 1,
+                                "timeZone": "Pacific Standard Time"
+                            },
+                            "evaluatedRecurrence": {
+                                "frequency": "Minute",
+                                "interval": 1,
+                                "timeZone": "Pacific Standard Time"
+                            },
+                            "type": "Recurrence"
+                        }
+                    },
+                    "actions": {
+                        "For_each": {
+                            "foreach": "@body('Get_emails_(V3)')?['value']",
+                            "actions": {
+                                "For_each_2": {
+                                    "foreach": "@items('For_each')['attachments']",
+                                    "actions": {
+                                        "Insert_row_(V2)": {
+                                            "runAfter": {},
+                                            "type": "ApiConnection",
+                                            "inputs": {
+                                                "body": {
+                                                    "BCCAddress": "@items('For_each')?['bccRecipients']",
+                                                    "Body": "@items('For_each')?['body']",
+                                                    "CCAddress": "@items('For_each')?['ccRecipients']",
+                                                    "EmailSendDateTime": "@items('For_each')?['receivedDateTime']",
+                                                    "FromAddress": "@items('For_each')?['from']",
+                                                    "Subject": "@items('For_each')?['subject']",
+                                                    "ToAddress": "@items('For_each')?['toRecipients']",
+                                                    "fileName": "@base64ToString(items('For_each_2')?['contentBytes'])"
+                                                },
+                                                "host": {
+                                                    "connection": {
+                                                        "name": "@parameters('$connections')['sql_1']['connectionId']"
+                                                    }
+                                                },
+                                                "method": "post",
+                                                "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent('default'))},@{encodeURIComponent(encodeURIComponent('default'))}/tables/@{encodeURIComponent(encodeURIComponent('[dbo].[TMRsEmail]'))}/items"
+                                            },
+                                            "runtimeConfiguration": {
+                                                "secureData": {
+                                                    "properties": [
+                                                        "inputs"
+                                                    ]
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "runAfter": {},
+                                    "type": "Foreach"
+                                },
+                                "Mark_as_read_or_unread_(V3)": {
+                                    "runAfter": {
+                                        "For_each_2": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": {
+                                            "isRead": true
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['office365_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "patch",
+                                        "path": "/codeless/v3/v1.0/me/messages/@{encodeURIComponent(items('For_each')?['id'])}/markAsRead"
+                                    }
+                                }
+                            },
+                            "runAfter": {
+                                "Get_emails_(V3)": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "Foreach"
+                        },
+                        "Get_emails_(V3)": {
+                            "runAfter": {},
+                            "type": "ApiConnection",
+                            "inputs": {
+                                "host": {
+                                    "connection": {
+                                        "name": "@parameters('$connections')['office365_1']['connectionId']"
+                                    }
+                                },
+                                "method": "get",
+                                "path": "/v3/Mail",
+                                "queries": {
+                                    "fetchOnlyFlagged": false,
+                                    "fetchOnlyUnread": true,
+                                    "folderPath": "Inbox",
+                                    "importance": "Any",
+                                    "includeAttachments": true,
+                                    "top": 25
+                                }
+                            },
+                            "operationOptions": "DisableAutomaticDecompression"
+                        }
+                    },
+                    "outputs": {}
+                },
+                "parameters": {
+                    "$connections": {
+                        "value": {
+                            "office365_1": {
+                                "connectionId": "[parameters('connections_office365_4_externalid')]",
+                                "connectionName": "office365-4",
+                                "id": "/subscriptions/855cfd52-abcd-efgh-b698-8d8a995bd70f/providers/Microsoft.Web/locations/westus2/managedApis/office365"
+                            },
+                            "sql_1": {
+                                "connectionId": "[parameters('connections_sql_externalid')]",
+                                "connectionName": "sql",
+                                "id": "/subscriptions/855cfd52-abcd-efgh-b698-8d8a995bd70f/providers/Microsoft.Web/locations/westus2/managedApis/sql"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}
