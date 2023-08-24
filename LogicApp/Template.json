@@ -13,6 +13,9 @@
         "connections_sql_externalid": {
             "defaultValue": "/subscriptions/855cfd52-abcd-efgh-b698-8d8a995bd70f/resourceGroups/CC-DEV-RG/providers/Microsoft.Web/connections/sql",
             "type": "String"
+        },
+       "Environment": {
+            "value": "DEV"
         }
     },
     "variables": {},
